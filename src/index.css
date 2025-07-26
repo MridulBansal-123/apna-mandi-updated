@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --toast-bg: #ffffff;
+    --toast-color: #374151;
+    --toast-border: #e5e7eb;
+  }
+  
+  .dark {
+    --toast-bg: #1e293b;
+    --toast-color: #f1f5f9;
+    --toast-border: #475569;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+@layer utilities {
+  .animation-delay-1000 {
+    animation-delay: 1s;
+  }
+  
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-slate-700 to-slate-600 dark:from-slate-200 dark:to-slate-300 bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-emerald {
+    @apply bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  .glass-effect {
+    @apply backdrop-blur-xl bg-white/80 dark:bg-slate-900/80 border border-white/20 dark:border-slate-700/50;
+  }
+  
+  /* Enhanced glass effect with glow */
+  .glass-effect-glow {
+    @apply backdrop-blur-xl bg-white/80 dark:bg-slate-900/80 border border-white/20 dark:border-slate-700/50 shadow-lg shadow-slate-500/10 dark:shadow-slate-900/20;
+  }
+  
+  .glass-effect-glow:hover {
+    @apply shadow-xl shadow-slate-500/20 dark:shadow-slate-800/30;
+  }
+  
+  /* Price slider styling */
+  .slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  .slider-thumb::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    border: 2px solid white;
+  }
+  
+  .slider-thumb::-moz-range-thumb {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    border: 2px solid white;
+  }
+  
+  /* Professional input styling */
+  .glass-input {
+    @apply backdrop-blur-lg bg-white/90 dark:bg-slate-800/90 border border-slate-200/50 dark:border-slate-600/50 rounded-xl transition-all duration-300 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400;
+  }
+  
+  .glass-input:focus {
+    @apply bg-white dark:bg-slate-800 border-blue-500/50 ring-2 ring-blue-500/20;
+  }
+  
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
+  }
+  
+  .animate-bounce-gentle {
+    animation: bounceGentle 0.6s ease-in-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounceGentle {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40%, 43% {
+    transform: translateY(-5px);
+  }
+  70% {
+    transform: translateY(-3px);
+  }
+  90% {
+    transform: translateY(-2px);
+  }
+}
