@@ -40,7 +40,7 @@ export default function BrowseProducts() {
       try {
         const { data } = await api.get('/buyer/products');
         setProducts(data);
-        
+
         // Calculate max price for range slider
         const prices = data.map(p => p.price);
         const max = Math.max(...prices);
@@ -59,11 +59,11 @@ export default function BrowseProducts() {
   const filteredProducts = useMemo(() => {
     let filtered = products.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = selectedCategory === 'all' || 
+      const matchesCategory = selectedCategory === 'all' ||
         product.category?.toLowerCase() === selectedCategory ||
         product.name.toLowerCase().includes(selectedCategory);
       const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
-      
+
       return matchesSearch && matchesCategory && matchesPrice;
     });
 
@@ -87,46 +87,46 @@ export default function BrowseProducts() {
 
     return filtered;
   }, [products, searchTerm, selectedCategory, sortBy, priceRange]);
-  
+
   const handlePlaceOrder = async () => {
-      const cartItems = Object.keys(cart)
-        .map(productId => {
-            const product = products.find(p => p._id === productId);
-            if (!product) return null;
-            return { ...product, quantity: cart[productId] };
-        })
-        .filter(Boolean);
-      
-      if (cartItems.length === 0) {
-          toast.error("Your cart is empty.");
-          return;
-      }
+    const cartItems = Object.keys(cart)
+      .map(productId => {
+        const product = products.find(p => p._id === productId);
+        if (!product) return null;
+        return { ...product, quantity: cart[productId] };
+      })
+      .filter(Boolean);
 
-      const ordersBySeller = cartItems.reduce((acc, item) => {
-          const sellerId = item.seller?._id;
-          if (!sellerId) return acc;
-          if (!acc[sellerId]) {
-              acc[sellerId] = { sellerId, items: [], totalPrice: 0 };
-          }
-          acc[sellerId].items.push(item);
-          acc[sellerId].totalPrice += item.price * item.quantity;
-          return acc;
-      }, {});
+    if (cartItems.length === 0) {
+      toast.error("Your cart is empty.");
+      return;
+    }
 
-      try {
-          for (const sellerOrder of Object.values(ordersBySeller)) {
-              await api.post('/buyer/orders', { 
-                  cart: sellerOrder.items, 
-                  sellerId: sellerOrder.sellerId, 
-                  totalPrice: sellerOrder.totalPrice, 
-                  deliveryAddress: { pincode: '12345' }
-              });
-          }
-          toast.success("All orders placed successfully!");
-          clearCart();
-      } catch (error) {
-          toast.error(error.response?.data?.message || "Failed to place one or more orders.");
+    const ordersBySeller = cartItems.reduce((acc, item) => {
+      const sellerId = item.seller?._id;
+      if (!sellerId) return acc;
+      if (!acc[sellerId]) {
+        acc[sellerId] = { sellerId, items: [], totalPrice: 0 };
       }
+      acc[sellerId].items.push(item);
+      acc[sellerId].totalPrice += item.price * item.quantity;
+      return acc;
+    }, {});
+
+    try {
+      for (const sellerOrder of Object.values(ordersBySeller)) {
+        await api.post('/buyer/orders', {
+          cart: sellerOrder.items,
+          sellerId: sellerOrder.sellerId,
+          totalPrice: sellerOrder.totalPrice,
+          deliveryAddress: { pincode: '12345' }
+        });
+      }
+      toast.success("All orders placed successfully!");
+      clearCart();
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to place one or more orders.");
+    }
   };
 
   const cartItemCount = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
@@ -156,7 +156,7 @@ export default function BrowseProducts() {
               Discover fresh products from local sellers • <span className="text-blue-600 dark:text-blue-400 font-semibold">{filteredProducts.length}</span> items available
             </p>
           </div>
-          
+
           {/* Search Bar */}
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -176,7 +176,7 @@ export default function BrowseProducts() {
 
         {/* Divider */}
         <div className="border-t border-gray-200 dark:border-gray-600 mb-8"></div>
-        
+
         {/* Filters Section */}
         <div className="space-y-6">
           {/* Top Row: Categories and Controls */}
@@ -189,11 +189,10 @@ export default function BrowseProducts() {
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center space-x-2 ${
-                      selectedCategory === category.id
+                    className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center space-x-2 ${selectedCategory === category.id
                         ? 'bg-blue-600 dark:bg-blue-500 text-white'
                         : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-600 hover:text-blue-700 dark:hover:text-blue-400 border border-gray-200 dark:border-gray-600'
-                    }`}
+                      }`}
                   >
                     <span className="text-base">{category.icon}</span>
                     <span>{category.name}</span>
@@ -224,11 +223,10 @@ export default function BrowseProducts() {
                 <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1 border border-gray-200 dark:border-gray-600">
                   <button
                     onClick={() => setViewMode('grid')}
-                    className={`p-2 rounded-md transition-colors duration-200 ${
-                      viewMode === 'grid'
+                    className={`p-2 rounded-md transition-colors duration-200 ${viewMode === 'grid'
                         ? 'bg-white dark:bg-gray-600 shadow-sm text-blue-600 dark:text-blue-400'
                         : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                    }`}
+                      }`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -236,11 +234,10 @@ export default function BrowseProducts() {
                   </button>
                   <button
                     onClick={() => setViewMode('list')}
-                    className={`p-2 rounded-md transition-colors duration-200 ${
-                      viewMode === 'list'
+                    className={`p-2 rounded-md transition-colors duration-200 ${viewMode === 'list'
                         ? 'bg-white dark:bg-gray-600 shadow-sm text-blue-600 dark:text-blue-400'
                         : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                    }`}
+                      }`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
@@ -267,12 +264,12 @@ export default function BrowseProducts() {
                     onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
                     className="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer"
                     style={{
-                      background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${(priceRange[1]/maxPrice)*100}%, #e5e7eb ${(priceRange[1]/maxPrice)*100}%, #e5e7eb 100%)`
+                      background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${(priceRange[1] / maxPrice) * 100}%, #e5e7eb ${(priceRange[1] / maxPrice) * 100}%, #e5e7eb 100%)`
                     }}
                   />
                 </div>
               </div>
-              
+
               <button
                 onClick={() => setPriceRange([0, maxPrice])}
                 className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
@@ -296,11 +293,10 @@ export default function BrowseProducts() {
           <p className="text-gray-600 dark:text-gray-400">Try adjusting your filters or search terms</p>
         </div>
       ) : (
-        <div className={`${
-          viewMode === 'grid' 
-            ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' 
+        <div className={`${viewMode === 'grid'
+            ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
             : 'space-y-4'
-        }`}>
+          }`}>
           {filteredProducts.map(product => (
             <ProductCard key={product._id} product={product} viewMode={viewMode} />
           ))}
@@ -310,7 +306,7 @@ export default function BrowseProducts() {
       {/* Floating Cart */}
       {cartItemCount > 0 && (
         <div className="fixed bottom-8 right-8 z-40">
-          <button 
+          <button
             onClick={handlePlaceOrder}
             className="bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-700 dark:hover:bg-emerald-800 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition-colors duration-200 flex items-center space-x-3"
           >
