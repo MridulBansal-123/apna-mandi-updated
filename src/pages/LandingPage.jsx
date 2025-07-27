@@ -8,14 +8,25 @@ export default function LandingPage() {
   const { login } = useStore();
 
   const handleGoogleSuccess = async (credentialResponse) => {
+    console.log('🔑 Google login attempt started');
     try {
+        console.log('📡 Making request to backend...');
         const res = await api.post('/auth/google', {
             credential: credentialResponse.credential,
         });
+        console.log('✅ Backend response received:', res.status);
         login(res.data);
         toast.success('Login Successful! Please complete your profile.');
     } catch (error) {
-        toast.error(error.response?.data?.message || 'Google login failed.');
+        console.error('❌ Google login error:', error);
+        console.error('- Status:', error.response?.status);
+        console.error('- URL:', error.config?.url);
+        console.error('- Response:', error.response?.data);
+        
+        const message = error.response?.data?.message || 
+                       (error.response?.status === 404 ? 'Backend endpoint not found. Please check deployment.' : 
+                        'Google login failed. Please try again.');
+        toast.error(message);
     }
   };
 
