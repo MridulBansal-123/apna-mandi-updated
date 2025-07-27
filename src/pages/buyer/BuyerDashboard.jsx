@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import StatCard from '../../components/shared/StatCard';
 import { api } from '../../utils/api';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
+import Chatbot from '../../components/chat/Chatbot';
+
 
 export default function BuyerDashboard({ setCurrentPage }) {
   const [stats, setStats] = useState({ active: 0, completed: 0, totalSpent: 0, savedMoney: 0 });
@@ -271,6 +273,7 @@ export default function BuyerDashboard({ setCurrentPage }) {
           <p className="text-slate-600 dark:text-slate-400 text-sm">Manage payment methods</p>
         </div>
       </div>
+      <Chatbot />
     </div>
   );
 }
