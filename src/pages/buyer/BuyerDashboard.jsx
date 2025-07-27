@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import StatCard from '../../components/shared/StatCard';
 import { api } from '../../utils/api';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleOpen } from '../../utils/toggleSlice';
+import RequirementForm from './RequirementForm';
 
 export default function BuyerDashboard({ setCurrentPage }) {
   const [stats, setStats] = useState({ active: 0, completed: 0, totalSpent: 0, savedMoney: 0 });
   const [recentOrders, setRecentOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,7 +30,9 @@ export default function BuyerDashboard({ setCurrentPage }) {
     };
     fetchData();
   }, []);
-
+  const isOpen = useSelector((state) => state.toggle.isOpen);
+console.log("hi")
+console.log(isOpen)
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-96">
@@ -35,7 +40,19 @@ export default function BuyerDashboard({ setCurrentPage }) {
       </div>
     );
   }
+  const dispatch=useDispatch()
+  const handleform=()=>{
+    console.log("clecled");
+    dispatch(toggleOpen())
+    console.log(isOpen)
 
+  }
+  // const dispatch=useDispatch();
+  if(isOpen){
+    return (
+      <RequirementForm/>
+    )
+  }
   return (
     <div className="space-y-8">
       {/* Header Section */}
@@ -58,7 +75,18 @@ export default function BuyerDashboard({ setCurrentPage }) {
               Track your orders and discover fresh products from local sellers
             </p>
           </div>
-          
+          <button
+              onClick={handleform}
+              className=" mr-2 group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold py-4 px-8 rounded-2xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:shadow-xl transform hover:-translate-y-1 border border-emerald-400/50"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <span className="relative z-10 flex items-center justify-center space-x-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+                <span>Post Requirememnt</span>
+              </span>
+            </button>
           <div className="mt-6 lg:mt-0 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
             <button
               onClick={() => setCurrentPage('browse')}

@@ -2,12 +2,18 @@
   "name": "apna-mandi-client-final",
   "version": "1.0.0",
   "type": "module",
-  "scripts": { "dev": "vite", "build": "vite build", "preview": "vite preview" },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "@react-oauth/google": "^0.12.1",
+    "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^9.2.0",
     "sonner": "^1.4.41",
     "zustand": "^4.5.2"
   },
