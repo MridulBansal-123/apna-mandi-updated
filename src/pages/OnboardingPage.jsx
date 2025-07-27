@@ -9,8 +9,8 @@ const RoleSelector = ({ onSelect }) => (
         <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">Welcome to Apna Mandi!</h2>
         <p className="text-lg text-slate-600 dark:text-slate-300 font-medium">To get started, please tell us who you are.</p>
         <div className="mt-10 flex flex-col sm:flex-row gap-6">
-            <button 
-                onClick={() => onSelect('Buyer')} 
+            <button
+                onClick={() => onSelect('Buyer')}
                 className="group relative w-full p-8 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-2xl hover:border-emerald-500 dark:hover:border-emerald-400 bg-white/60 dark:bg-slate-800/60 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all duration-300 shadow-lg shadow-slate-500/10 dark:shadow-slate-900/20 hover:shadow-emerald-500/20 dark:hover:shadow-emerald-400/10 backdrop-blur-sm hover:-translate-y-1"
             >
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/30 to-teal-50/20 dark:from-emerald-900/10 dark:to-teal-900/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -22,8 +22,8 @@ const RoleSelector = ({ onSelect }) => (
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">I'm a Buyer</h3>
                 <p className="text-slate-600 dark:text-slate-300 font-medium">I am a local vendor looking to purchase raw materials.</p>
             </button>
-            <button 
-                onClick={() => onSelect('Seller')} 
+            <button
+                onClick={() => onSelect('Seller')}
                 className="group relative w-full p-8 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-2xl hover:border-blue-500 dark:hover:border-blue-400 bg-white/60 dark:bg-slate-800/60 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 shadow-lg shadow-slate-500/10 dark:shadow-slate-900/20 hover:shadow-blue-500/20 dark:hover:shadow-blue-400/10 backdrop-blur-sm hover:-translate-y-1"
             >
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-indigo-50/20 dark:from-blue-900/10 dark:to-indigo-900/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -95,7 +95,7 @@ const OnboardingForm = ({ role }) => {
     return (
         <div className="glass-effect rounded-3xl p-8 border border-white/20 dark:border-slate-700/50 shadow-2xl shadow-slate-500/10 dark:shadow-slate-900/20">
             <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-slate-50/30 to-blue-50/40 dark:from-slate-800/40 dark:via-slate-700/30 dark:to-slate-600/40 rounded-3xl -z-10"></div>
-            
+
             <div className="flex items-center mb-6">
                 <div className={`w-12 h-12 bg-gradient-to-br ${role === 'Buyer' ? 'from-emerald-500 to-teal-600' : 'from-blue-500 to-indigo-600'} rounded-2xl flex items-center justify-center mr-4 shadow-lg ${role === 'Buyer' ? 'shadow-emerald-500/30' : 'shadow-blue-500/30'}`}>
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,74 +111,73 @@ const OnboardingForm = ({ role }) => {
                     <p className="text-slate-600 dark:text-slate-300 font-medium">Please provide your business details to continue.</p>
                 </div>
             </div>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <input 
-                        name="businessName" 
-                        placeholder="Business Name" 
-                        onChange={handleChange} 
-                        className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm" 
-                        required 
+                    <input
+                        name="businessName"
+                        placeholder="Business Name"
+                        onChange={handleChange}
+                        className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm"
+                        required
                     />
-                    <input 
-                        name="gstNumber" 
-                        placeholder="GST Number (Optional)" 
-                        onChange={handleChange} 
-                        className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm" 
+                    <input
+                        name="gstNumber"
+                        placeholder="GST Number (Optional)"
+                        onChange={handleChange}
+                        className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm"
                     />
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <input 
-                        name="businessCategory" 
-                        placeholder="Category (e.g., Street Food, Restaurant)" 
-                        onChange={handleChange} 
-                        className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm" 
-                        required 
+                    <input
+                        name="businessCategory"
+                        placeholder="Category (e.g., Street Food, Restaurant)"
+                        onChange={handleChange}
+                        className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm"
+                        required
                     />
-                    <input 
-                        name="phone" 
-                        placeholder="Mobile Number" 
-                        onChange={handleChange} 
-                        className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm" 
-                        required 
+                    <input
+                        name="phone"
+                        placeholder="Mobile Number"
+                        onChange={handleChange}
+                        className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm"
+                        required
                     />
                 </div>
-                
-                <input 
-                    name="street" 
-                    placeholder="Street Address" 
-                    onChange={handleChange} 
-                    className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm" 
-                    required 
+
+                <input
+                    name="street"
+                    placeholder="Street Address"
+                    onChange={handleChange}
+                    className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm"
+                    required
                 />
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <input 
-                        name="city" 
-                        placeholder="City" 
-                        onChange={handleChange} 
-                        className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm" 
-                        required 
+                    <input
+                        name="city"
+                        placeholder="City"
+                        onChange={handleChange}
+                        className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm"
+                        required
                     />
-                    <input 
-                        name="pincode" 
-                        placeholder="Pincode" 
-                        onChange={handleChange} 
-                        className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm" 
-                        required 
+                    <input
+                        name="pincode"
+                        placeholder="Pincode"
+                        onChange={handleChange}
+                        className="w-full p-4 border-2 border-slate-200/50 dark:border-slate-600/50 rounded-xl bg-white/60 dark:bg-slate-800/60 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 font-medium backdrop-blur-sm"
+                        required
                     />
                 </div>
-                
+
                 <button
                     type="button"
                     onClick={handleGetLocation}
-                    className={`w-full font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center space-x-2 border-2 ${
-                        location?.coordinates 
-                            ? 'bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-emerald-500/30 hover:shadow-emerald-500/50 border-emerald-400' 
-                            : 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-blue-500/30 hover:shadow-blue-500/50 border-blue-400'
-                    }`}
+                    className={`w-full font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center space-x-2 border-2 ${location?.coordinates
+                        ? 'bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-emerald-500/30 hover:shadow-emerald-500/50 border-emerald-400'
+                        : 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-blue-500/30 hover:shadow-blue-500/50 border-blue-400'
+                        }`}
                 >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -186,21 +185,20 @@ const OnboardingForm = ({ role }) => {
                     </svg>
                     <span>{location?.coordinates ? 'Location Captured!' : 'Capture My Location'}</span>
                 </button>
-                
+
                 {geoError && (
                     <div className="bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-700/50 text-red-700 dark:text-red-300 px-4 py-3 rounded-xl font-medium">
                         {geoError}
                     </div>
                 )}
-                
-                <button 
-                    type="submit" 
-                    disabled={loading} 
-                    className={`w-full font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center space-x-2 border-2 ${
-                        role === 'Buyer' 
-                            ? 'bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 disabled:from-emerald-300 disabled:to-teal-400 text-white shadow-emerald-500/30 hover:shadow-emerald-500/50 border-emerald-400' 
-                            : 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 disabled:from-blue-300 disabled:to-indigo-400 text-white shadow-blue-500/30 hover:shadow-blue-500/50 border-blue-400'
-                    } disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none`}
+
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className={`w-full font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center space-x-2 border-2 ${role === 'Buyer'
+                        ? 'bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 disabled:from-emerald-300 disabled:to-teal-400 text-white shadow-emerald-500/30 hover:shadow-emerald-500/50 border-emerald-400'
+                        : 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 disabled:from-blue-300 disabled:to-indigo-400 text-white shadow-blue-500/30 hover:shadow-blue-500/50 border-blue-400'
+                        } disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none`}
                 >
                     {loading && (
                         <svg className="animate-spin w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -218,8 +216,8 @@ export default function OnboardingPage() {
     const [selectedRole, setSelectedRole] = useState(null);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-            <div className="w-full max-w-2xl bg-white p-8 rounded-xl shadow-lg">
+        <div className="min-h-screen flex items-center justify-center bg-black p-4">
+            <div className="w-full max-w-2xl bg-black p-8 rounded-xl shadow-xlg">
                 {!selectedRole ? (
                     <RoleSelector onSelect={setSelectedRole} />
                 ) : (

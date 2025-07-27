@@ -11,11 +11,10 @@ const UsersIcon = () => <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24"
 const NavItem = ({ icon, label, isActive, onClick }) => (
   <button
     onClick={onClick}
-    className={`group flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all duration-300 transform hover:scale-105 ${
-      isActive
-        ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/30 dark:shadow-primary-500/20'
-        : 'text-gray-600 dark:text-dark-400 hover:bg-gray-100 dark:hover:bg-dark-200 hover:text-gray-900 dark:hover:text-dark-900 hover:shadow-card dark:hover:shadow-card-dark'
-    }`}
+    className={`group flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl transition-all duration-300 transform hover:scale-105 ${isActive
+      ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/30 dark:shadow-primary-500/20'
+      : 'text-gray-600 dark:text-dark-400 hover:bg-gray-100 dark:hover:bg-dark-200 hover:text-gray-900 dark:hover:text-dark-900 hover:shadow-card dark:hover:shadow-card-dark'
+      }`}
   >
     <div className={`transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
       {icon}
@@ -51,50 +50,71 @@ export default function Sidebar({ currentPage, setCurrentPage }) {
     user.role?.toLowerCase() === 'buyer'
       ? buyerNav
       : user.role?.toLowerCase() === 'seller'
-      ? sellerNav
-      : adminNav;
+        ? sellerNav
+        : adminNav;
 
   return (
-    <aside className="w-64 bg-white dark:bg-dark-100 border-r border-gray-200 dark:border-dark-200 flex-shrink-0 hidden md:flex flex-col backdrop-blur-md transition-all duration-300">
-      <div className="h-24 flex items-center px-6 border-b border-gray-200 dark:border-dark-200">
-        <div className="flex items-center space-x-3">
-          <div className="relative">
-            <img src="/assets/logo.svg" alt="Apna Mandi Logo" className="h-8 w-auto drop-shadow-md" />
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-400 to-primary-600 rounded-full blur-lg opacity-30 animate-pulse"></div>
-          </div>
-          <span className="font-bold text-xl text-gray-800 dark:text-dark-900 bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent">
-            Apna Mandi
-          </span>
-        </div>
-      </div>
-      
-      <div className="flex-1 p-4">
-        <div className="mb-6">
-          <h3 className="text-xs uppercase tracking-wider text-gray-500 dark:text-dark-500 font-semibold mb-3">
-            {user.role} Portal
-          </h3>
-          <div className="h-1 w-12 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full"></div>
-        </div>
-        
-        <nav className="space-y-2">
-          {navItems.map(item => (
-            <div key={item.id} className="animate-slide-up" style={{animationDelay: `${navItems.indexOf(item) * 0.1}s`}}>
-              <NavItem
-                icon={item.icon}
-                label={item.label}
-                isActive={currentPage === item.id}
-                onClick={() => setCurrentPage(item.id)}
-              />
-            </div>
+    <aside className="fixed bottom-0 left-0 right-0 md:relative md:w-64 bg-white dark:bg-dark-100 border-t md:border-r border-gray-200 dark:border-dark-200 flex-shrink-0 flex md:flex-col backdrop-blur-md z-50 transition-all duration-300">
+      {/* Mobile: Bottom bar navigation */}
+      <div className="flex md:hidden w-full">
+        <nav className="flex justify-around items-center w-full p-2">
+          {navItems.slice(0, 4).map(item => (
+            <button
+              key={item.id}
+              onClick={() => setCurrentPage(item.id)}
+              className={`p-2 rounded-lg flex flex-col items-center ${currentPage === item.id ? 'text-primary-600 dark:text-primary-400' : 'text-gray-500 dark:text-dark-500'}`}
+            >
+              <span className="text-xl">{item.icon}</span>
+              <span className="text-xs mt-1">{item.label}</span>
+            </button>
           ))}
         </nav>
       </div>
-      
-      {/* Footer */}
-      <div className="p-4 border-t border-gray-200 dark:border-dark-200">
-        <div className="text-xs text-gray-500 dark:text-dark-500 text-center">
-          <p className="font-semibold">Apna Mandi v2.0</p>
-          <p className="mt-1">© 2024 All rights reserved</p>
+
+      {/* Desktop: Full sidebar */}
+      <div className="hidden md:flex md:flex-col w-full">
+        {/* Logo Header */}
+        <div className="h-24 flex items-center px-6 border-b border-gray-200 dark:border-dark-200">
+          <div className="flex items-center space-x-3">
+            <div className="relative">
+              <img src="/assets/logo.svg" alt="Apna Mandi Logo" className="h-8 w-auto drop-shadow-md" />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-400 to-primary-600 rounded-full blur-lg opacity-30 animate-pulse"></div>
+            </div>
+            <span className="font-bold text-xl text-gray-800 dark:text-dark-900 bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent">
+              Apna Mandi
+            </span>
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <div className="flex-1 p-4">
+          <div className="mb-6">
+            <h3 className="text-xs uppercase tracking-wider text-gray-500 dark:text-dark-500 font-semibold mb-3">
+              {user.role} Portal
+            </h3>
+            <div className="h-1 w-12 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full"></div>
+          </div>
+
+          <nav className="space-y-2">
+            {navItems.map(item => (
+              <div key={item.id} className="animate-slide-up" style={{ animationDelay: `${navItems.indexOf(item) * 0.1}s` }}>
+                <NavItem
+                  icon={item.icon}
+                  label={item.label}
+                  isActive={currentPage === item.id}
+                  onClick={() => setCurrentPage(item.id)}
+                />
+              </div>
+            ))}
+          </nav>
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 border-t border-gray-200 dark:border-dark-200">
+          <div className="text-xs text-gray-500 dark:text-dark-500 text-center">
+            <p className="font-semibold">Apna Mandi v2.0</p>
+            <p className="mt-1">© 2025 All rights reserved</p>
+          </div>
         </div>
       </div>
     </aside>
