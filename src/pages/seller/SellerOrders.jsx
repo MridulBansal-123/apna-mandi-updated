@@ -122,7 +122,7 @@ export default function SellerOrders() {
                         Order #{order._id.slice(-6).toUpperCase()}
                       </h3>
                       <p className="text-sm text-gray-500 dark:text-dark-400">
-                        from {order.buyer.name} • {new Date(order.createdAt).toLocaleDateString('en-US', {
+                        from {order.buyer?.name || 'Unknown Buyer'} • {new Date(order.createdAt).toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
