@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import StatCard from '../../components/shared/StatCard';
 import { api } from '../../utils/api';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
+import { useDispatch, useSelector } from 'react-redux';
+import AdminCheck from './AdminCheck';
+import { toggleAdminOpen } from '../../utils/admintoggleSlice';
 
 export default function SellerDashboard({ setCurrentPage }) {
   const [stats, setStats] = useState({ pendingOrders: 0, lowStock: 0, totalProducts: 0 });
   const [isLoading, setIsLoading] = useState(true);
-
+  const dispatch=useDispatch()
+  const isAdminOpen = useSelector((state) => state.adminToggle.isAdminOpen);
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -25,7 +29,11 @@ export default function SellerDashboard({ setCurrentPage }) {
     };
     fetchStats();
   }, []);
-
+  if(isAdminOpen){
+    return (
+     <AdminCheck/>
+    )
+  }
   return (
     // <div className="space-y-4 px-2 max-w-full md:space-y-6 lg:space-y-8 md:px-0">
     //   {/* Header - Mobile Optimized */}
@@ -353,6 +361,7 @@ export default function SellerDashboard({ setCurrentPage }) {
           </h2>
         </div>
 
+<<<<<<< HEAD
         <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {[
             {
@@ -421,6 +430,74 @@ export default function SellerDashboard({ setCurrentPage }) {
               </div>
             </button>
           ))}
+=======
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          {/* Manage Stock */}
+          <button 
+            onClick={() => setCurrentPage('stock')} 
+            className="group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold py-4 px-6 rounded-2xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:shadow-xl transform hover:-translate-y-1"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative flex flex-col items-center space-y-2">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              </svg>
+              <span className="text-sm">Manage Stock</span>
+            </div>
+          </button>
+
+          {/* View Orders */}
+          <button 
+            onClick={() => setCurrentPage('orders')} 
+            className="group relative overflow-hidden bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-4 px-6 rounded-2xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:shadow-xl transform hover:-translate-y-1"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative flex flex-col items-center space-y-2">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+              <span className="text-sm">View Orders</span>
+            </div>
+          </button>
+       <button 
+            onClick={() => dispatch(toggleAdminOpen())} 
+            className="group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold py-4 px-6 rounded-2xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:shadow-xl transform hover:-translate-y-1"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative flex flex-col items-center space-y-2">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              </svg>
+              <span className="text-sm">New Request</span>
+            </div>
+          </button>
+          {/* Profile Settings */}
+          <button 
+            onClick={() => setCurrentPage('profile')} 
+            className="group relative overflow-hidden bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold py-4 px-6 rounded-2xl hover:from-purple-600 hover:to-pink-700 transition-all duration-300 shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:shadow-xl transform hover:-translate-y-1"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative flex flex-col items-center space-y-2">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <span className="text-sm">Profile</span>
+            </div>
+          </button>
+
+          {/* Analytics */}
+          <button 
+            className="group relative overflow-hidden bg-gradient-to-r from-orange-500 to-red-600 text-white font-bold py-4 px-6 rounded-2xl hover:from-orange-600 hover:to-red-700 transition-all duration-300 shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:shadow-xl transform hover:-translate-y-1"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative flex flex-col items-center space-y-2">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              <span className="text-sm">Analytics</span>
+            </div>
+          </button>
+>>>>>>> check
         </div>
       </div>
 
