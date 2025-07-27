@@ -1,6 +1,7 @@
 import axios from 'axios';
 import useStore from '../store';
 
+// Fixed: Added /api path to production backend URL to match server routes
 const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://apna-mandi-updated-server.onrender.com/api' : '/api');
 
 export const api = axios.create({
