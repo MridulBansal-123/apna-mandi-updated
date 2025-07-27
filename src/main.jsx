@@ -4,6 +4,9 @@ import App from './App.jsx';
 import './index.css';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { ThemeProvider } from './contexts/ThemeContext.jsx';
+// import { store } from './utils/store.js';
+import { store2 } from './utils/store2.js';
+import { Provider } from 'react-redux';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -53,11 +56,13 @@ class ErrorBoundary extends React.Component {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <ThemeProvider>
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          <App />
-        </GoogleOAuthProvider>
-      </ThemeProvider>
+      <Provider store={store2}>
+        <ThemeProvider>
+          <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+            <App />
+          </GoogleOAuthProvider>
+        </ThemeProvider>
+      </Provider>
     </ErrorBoundary>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
