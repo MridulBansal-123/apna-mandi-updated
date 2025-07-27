@@ -7,7 +7,15 @@ import { ThemeProvider } from './contexts/ThemeContext.jsx';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
-console.log('main.jsx loaded, Google Client ID:', GOOGLE_CLIENT_ID ? 'Present' : 'Missing');
+console.log('🔧 Environment Check:');
+console.log('- VITE_GOOGLE_CLIENT_ID present:', GOOGLE_CLIENT_ID ? '✅ YES' : '❌ NO');
+console.log('- Environment mode:', import.meta.env.PROD ? 'Production' : 'Development');
+console.log('- All env vars:', Object.keys(import.meta.env).filter(key => key.startsWith('VITE_')));
+
+if (!GOOGLE_CLIENT_ID) {
+  console.error('❌ CRITICAL: VITE_GOOGLE_CLIENT_ID is missing!');
+  console.error('📋 Solution: Add VITE_GOOGLE_CLIENT_ID to Vercel environment variables');
+}
 
 // Error boundary component
 class ErrorBoundary extends React.Component {

@@ -6,6 +6,10 @@ import { GoogleLogin } from '@react-oauth/google';
 
 export default function LandingPage() {
   const { login } = useStore();
+  
+  // Check if Google Client ID is available
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  console.log('🔑 Google Client ID check:', googleClientId ? 'Available' : 'Missing');
 
   const handleGoogleSuccess = async (credentialResponse) => {
     console.log('🔑 Google login attempt started');
@@ -112,13 +116,28 @@ export default function LandingPage() {
           <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl shadow-slate-500/10 dark:shadow-slate-900/20 border border-slate-200/50 dark:border-slate-700/50 hover:shadow-2xl hover:shadow-slate-500/20 dark:hover:shadow-slate-800/30 transition-all duration-300 hover:-translate-y-1">
             <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-blue-50/20 dark:from-slate-700/20 dark:to-slate-600/10 rounded-2xl -z-10"></div>
             
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={() => toast.error('Google login failed.')}
-              useOneTap
-              theme={document.documentElement.classList.contains('dark') ? 'filled_black' : 'outline'}
-              size="large"
-            />
+            {!googleClientId ? (
+              <div className="text-center">
+                <div className="text-red-500 text-lg font-semibold mb-2">⚠️ Configuration Error</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                  Google Client ID is missing. Please add VITE_GOOGLE_CLIENT_ID to environment variables.
+                </div>
+                <div className="text-xs text-slate-500 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 p-3 rounded-lg">
+                  <strong>For developers:</strong><br/>
+                  1. Add VITE_GOOGLE_CLIENT_ID to Vercel environment variables<br/>
+                  2. Redeploy the application<br/>
+                  3. Clear browser cache
+                </div>
+              </div>
+            ) : (
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => toast.error('Google login failed.')}
+                useOneTap
+                theme={document.documentElement.classList.contains('dark') ? 'filled_black' : 'outline'}
+                size="large"
+              />
+            )}
           </div>
           
           <div className="mt-6 text-xs text-slate-500 dark:text-slate-400 font-medium">
