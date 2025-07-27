@@ -23,7 +23,7 @@ const RequirementForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        console.log("going")
+        
       await axios.post('http://localhost:5000/api/requirement', form);
       alert('Requirement posted!');
     } catch (err) {

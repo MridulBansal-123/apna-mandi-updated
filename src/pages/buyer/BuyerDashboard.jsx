@@ -31,8 +31,7 @@ export default function BuyerDashboard({ setCurrentPage }) {
     fetchData();
   }, []);
   const isOpen = useSelector((state) => state.toggle.isOpen);
-console.log("hi")
-console.log(isOpen)
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-96">
@@ -42,9 +41,9 @@ console.log(isOpen)
   }
   const dispatch=useDispatch()
   const handleform=()=>{
-    console.log("clecled");
+    // console.log("clecled");
     dispatch(toggleOpen())
-    console.log(isOpen)
+    // console.log(isOpen)
 
   }
   // const dispatch=useDispatch();
