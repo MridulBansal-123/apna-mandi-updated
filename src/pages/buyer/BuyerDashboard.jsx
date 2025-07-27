@@ -2,14 +2,7 @@ import React, { useEffect, useState } from 'react';
 import StatCard from '../../components/shared/StatCard';
 import { api } from '../../utils/api';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
-<<<<<<< HEAD
 import Chatbot from '../../components/chat/Chatbot';
-
-=======
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleOpen } from '../../utils/toggleSlice';
-import RequirementForm from './RequirementForm';
->>>>>>> check
 
 export default function BuyerDashboard({ setCurrentPage }) {
   const [stats, setStats] = useState({ active: 0, completed: 0, totalSpent: 0, savedMoney: 0 });
@@ -35,7 +28,6 @@ export default function BuyerDashboard({ setCurrentPage }) {
     };
     fetchData();
   }, []);
-  const isOpen = useSelector((state) => state.toggle.isOpen);
 
   if (isLoading) {
     return (
@@ -44,19 +36,7 @@ export default function BuyerDashboard({ setCurrentPage }) {
       </div>
     );
   }
-  const dispatch=useDispatch()
-  const handleform=()=>{
-    // console.log("clecled");
-    dispatch(toggleOpen())
-    // console.log(isOpen)
 
-  }
-  // const dispatch=useDispatch();
-  if(isOpen){
-    return (
-      <RequirementForm/>
-    )
-  }
   return (
     <div className="space-y-6 px-4 sm:space-y-8 sm:px-6 md:px-8 max-w-full">
       {/* Header Section - Made more compact for mobile */}
@@ -79,24 +59,8 @@ export default function BuyerDashboard({ setCurrentPage }) {
               Track your orders and discover fresh products
             </p>
           </div>
-<<<<<<< HEAD
 
           <div className="flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:space-x-3">
-=======
-          <button
-              onClick={handleform}
-              className=" mr-2 group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold py-4 px-8 rounded-2xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:shadow-xl transform hover:-translate-y-1 border border-emerald-400/50"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <span className="relative z-10 flex items-center justify-center space-x-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
-                <span>Post Requirememnt</span>
-              </span>
-            </button>
-          <div className="mt-6 lg:mt-0 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
->>>>>>> check
             <button
               onClick={() => setCurrentPage('browse')}
               className="group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-xl sm:rounded-2xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-md sm:shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:shadow-xl transform hover:-translate-y-0.5 sm:hover:-translate-y-1 border border-emerald-400/50 min-w-[120px] sm:min-w-[140px] flex items-center justify-center space-x-1 sm:space-x-2 text-sm sm:text-base"
@@ -122,81 +86,20 @@ export default function BuyerDashboard({ setCurrentPage }) {
         </div>
       </div>
 
-      {/* Stats Cards - Changed to 2 columns on mobile */}
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[{
-          title: "Active Orders",
-          iconBg: "from-blue-500 to-indigo-600",
-          icon: (
-            <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-            </svg>
-          ),
-          value: stats.active,
-          colorText: "text-blue-600 dark:text-blue-400",
-          description: "In progress",
-        }, {
-          title: "Completed",
-          iconBg: "from-emerald-500 to-teal-600",
-          icon: (
-            <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          ),
-          value: stats.completed,
-          colorText: "text-emerald-600 dark:text-emerald-400",
-          description: "Delivered",
-        }, {
-          title: "Total Spent",
-          iconBg: "from-indigo-500 to-purple-600",
-          icon: (
-            <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-            </svg>
-          ),
-          value: `₹${stats.totalSpent.toLocaleString()}`,
-          colorText: "text-indigo-600 dark:text-indigo-400",
-          description: "Lifetime",
-        }, {
-          title: "Money Saved",
-          iconBg: "from-amber-500 to-orange-600",
-          icon: (
-            <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-            </svg>
-          ),
-          value: `₹${stats.savedMoney.toLocaleString()}`,
-          colorText: "text-amber-600 dark:text-amber-400",
-          description: "Savings",
-        }].map(({ title, iconBg, icon, value, colorText, description }, idx) => (
-          <div
-            key={title}
-            className="glass-effect rounded-xl p-3 sm:p-4 md:p-5 md:rounded-2xl border border-white/20 dark:border-slate-700/50 shadow-md sm:shadow-xl dark:shadow-slate-900/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 sm:hover:-translate-y-1 relative overflow-hidden"
-          >
-            <div className={`absolute inset-0 bg-gradient-to-br ${iconBg} rounded-xl md:rounded-2xl opacity-10 -z-10`}></div>
-            <div className={`absolute inset-0 ring-1 ring-inset ${iconBg.replace('from-', 'from-').replace('to-', 'to-')} rounded-xl md:rounded-2xl opacity-20 -z-5`}></div>
-
-            <div className="flex items-center justify-between mb-2 sm:mb-3 md:mb-4">
-              <div className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-br ${iconBg} rounded-lg sm:rounded-xl flex items-center justify-center shadow-md sm:shadow-lg shadow-white/20`}>
-                {icon}
-              </div>
-              <div className={`text-xl sm:text-2xl md:text-3xl font-bold ${colorText}`}>{value}</div>
-            </div>
-            <h3 className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide truncate">{title}</h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 truncate">{description}</p>
-          </div>
-        ))}
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-6">
+        <StatCard title="Active Orders" value={stats.active} icon="📦" color="blue" />
+        <StatCard title="Completed Orders" value={stats.completed} icon="✅" color="green" />
+        <StatCard title="Total Spent" value={`₹${stats.totalSpent.toLocaleString()}`} icon="💰" color="purple" />
+        <StatCard title="Money Saved" value={`₹${stats.savedMoney.toLocaleString()}`} icon="💰" color="emerald" />
       </div>
 
-      {/* Recent Orders Section - Simplified for mobile */}
-      <div className="glass-effect rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-white/20 dark:border-slate-700/50 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-indigo-50/50 dark:from-blue-900/10 dark:via-purple-900/5 dark:to-indigo-900/10 rounded-2xl sm:rounded-3xl -z-10"></div>
+      {/* Recent Orders */}
+      <div className="glass-effect rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-white/20 dark:border-slate-700/50 relative overflow-hidden shadow-lg sm:shadow-xl">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-blue-500/5 dark:from-slate-800/10 dark:to-blue-900/10 rounded-2xl sm:rounded-3xl -z-10"></div>
 
-        <div className="flex items-center justify-between mb-4 sm:mb-6 flex-wrap gap-2">
-          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center whitespace-nowrap">
-            <span className="mr-2 sm:mr-3">📋</span>
-            Recent Orders
-          </h2>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-2 sm:gap-3">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-slate-100">Recent Orders</h2>
           <button
             onClick={() => setCurrentPage('orders')}
             className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors flex items-center space-x-1 whitespace-nowrap text-sm sm:text-base"
