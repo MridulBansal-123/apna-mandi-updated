@@ -25,9 +25,9 @@ const RequirementForm = () => {
     try {
         
       await axios.post('http://localhost:5000/api/requirement', form);
-      // alert('Requirement posted!');
+     console.log("posted")
     } catch (err) {
-      alert('Error: ' + (err.response?.data?.error || err.message));
+      console.log(err.message)
     }
   };
 
