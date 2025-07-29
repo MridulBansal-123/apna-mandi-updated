@@ -16,6 +16,7 @@ const AdminCheck = () => {
       console.error('Error fetching:', err);
     }
   };
+  
 
   const deleteRequirement = async (id) => {
     try {

@@ -5,13 +5,13 @@ import LoadingSpinner from '../../components/shared/LoadingSpinner';
 import { useDispatch, useSelector } from 'react-redux';
 import AdminCheck from './AdminCheck';
 import { toggleAdminOpen } from '../../utils/admintoggleSlice';
-
+import axios from 'axios';
 export default function SellerDashboard({ setCurrentPage }) {
   const [stats, setStats] = useState({ pendingOrders: 0, lowStock: 0, totalProducts: 0 });
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch()
   const isAdminOpen = useSelector((state) => state.adminToggle.isAdminOpen);
-
+  const [requirements, setRequirements] = useState([]);
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -30,13 +30,32 @@ export default function SellerDashboard({ setCurrentPage }) {
     };
     fetchStats();
   }, []);
-
+  const handlerequest=()=>{
+    console.log("hi")
+    console.log(isAdminOpen)
+    dispatch(toggleAdminOpen())
+  }
+  
+ 
+  useEffect(() => {
+    fetchRequirements();
+    const interval = setInterval(fetchRequirements, 5000);
+    return () => clearInterval(interval);
+  }, []);
+  const fetchRequirements = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/requirement');
+      setRequirements(res.data);
+      
+    } catch (err) {
+      console.error('Error fetching:', err);
+    }
+  };
   if (isAdminOpen) {
     return (
       <AdminCheck />
     )
   }
-
   return (
     <div className="space-y-4 px-2 max-w-full md:space-y-6 lg:space-y-8 md:px-0">
       {/* Header - Mobile Optimized */}
@@ -129,6 +148,25 @@ export default function SellerDashboard({ setCurrentPage }) {
               <span className="text-sm">Manage Stock</span>
             </div>
           </button>
+        <button 
+  onClick={handlerequest} 
+  className={`group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold py-4 px-6 rounded-2xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:shadow-xl transform hover:-translate-y-1 ${requirements.length > 0 ? 'text-red-500' : 'text-yellow-100'}`}
+>
+  {/* 🔴 Badge for requirement count */}
+  {requirements.length > 0 && (
+    <span className="absolute top-1 right-2 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full z-10">
+      {requirements.length}
+    </span>
+  )}
+
+  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+  <div className="relative flex flex-col items-center space-y-2">
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+    </svg>
+    <span className="text-sm">New Request</span>
+  </div>
+</button>
 
           {/* View Orders */}
           <button 
