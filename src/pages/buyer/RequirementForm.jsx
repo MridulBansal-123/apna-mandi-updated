@@ -24,7 +24,7 @@ const RequirementForm = () => {
     e.preventDefault();
     try {
         
-      await axios.post('https://apna-mandi-updated.vercel.app/api/requirement', form);
+      await axios.post('https://apna-mandi-updated-server.onrender.com/api/requirement', form);
      console.log("posted")
     } catch (err) {
       console.log(err.message)

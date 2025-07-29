@@ -44,7 +44,8 @@ export default function SellerDashboard({ setCurrentPage }) {
   }, []);
   const fetchRequirements = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/requirement');
+      const res = await axios.get('https://apna-mandi-updated.enderender.app/api/requirement');
+      // http://localhost:5000/api/requirement
       setRequirements(res.data);
       
     } catch (err) {

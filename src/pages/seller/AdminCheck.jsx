@@ -9,7 +9,7 @@ const AdminCheck = () => {
 
   const fetchRequirements = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/requirement');
+      const res = await axios.get('https://apna-mandi-updated-server.onrender.com/api/requirement');
       setRequirements(res.data);
       
     } catch (err) {
@@ -20,7 +20,7 @@ const AdminCheck = () => {
 
   const deleteRequirement = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/requirement/${id}`);
+      await axios.delete(`https://apna-mandi-updated-server.onrender.com/api/requirement/${id}`);
       setRequirements((prev) => prev.filter((req) => req._id !== id));
     } catch (err) {
       console.error('Error deleting:', err);
