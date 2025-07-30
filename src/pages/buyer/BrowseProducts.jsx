@@ -4,6 +4,8 @@ import { toast } from 'sonner';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
 import ProductCard from '../../components/buyer/ProductCard';
 import useStore from '../../store';
+import { useNotifications } from '../../contexts/NotificationContext';
+import { notificationEvents, NOTIFICATION_EVENTS } from '../../utils/notificationEvents';
 
 export default function BrowseProducts() {
   const [products, setProducts] = useState([]);
@@ -15,6 +17,7 @@ export default function BrowseProducts() {
   const [maxPrice, setMaxPrice] = useState(1000);
   const [viewMode, setViewMode] = useState('grid'); // grid or list
   const { cart, clearCart } = useStore();
+  const { refreshNotifications } = useNotifications();
 
   // Categories list
   const categories = [
@@ -117,13 +120,16 @@ export default function BrowseProducts() {
       for (const sellerOrder of Object.values(ordersBySeller)) {
         await api.post('/buyer/orders', {
           cart: sellerOrder.items,
-          sellerId: sellerOrder.sellerId,
           totalPrice: sellerOrder.totalPrice,
           deliveryAddress: { pincode: '12345' }
         });
       }
       toast.success("All orders placed successfully!");
       clearCart();
+      
+      // Emit order placed event for real-time notification updates
+      notificationEvents.emit(NOTIFICATION_EVENTS.ORDER_PLACED);
+      
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to place one or more orders.");
     }

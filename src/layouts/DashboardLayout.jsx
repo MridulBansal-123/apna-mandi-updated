@@ -3,6 +3,7 @@ import useStore from '../store';
 import Sidebar from '../components/shared/Sidebar';
 import Header from '../components/shared/Header';
 import ProfilePage from '../pages/ProfilePage';
+import NotificationsPage from '../pages/NotificationsPage';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
 
 // Dynamic imports for pages
@@ -26,6 +27,7 @@ export default function DashboardLayout() {
 
   const renderPage = () => {
     if (currentPage === 'profile') return <ProfilePage />;
+    if (currentPage === 'notifications') return <NotificationsPage />;
     
     const userRole = user.role?.toLowerCase();
     

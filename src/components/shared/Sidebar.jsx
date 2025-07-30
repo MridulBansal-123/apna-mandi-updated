@@ -28,6 +28,7 @@ const NavItem = ({ icon, label, isActive, onClick }) => (
 
 export default function Sidebar({ currentPage, setCurrentPage }) {
   const { user } = useStore();
+  
   if (!user) return null;
 
   const buyerNav = [
@@ -103,6 +104,7 @@ export default function Sidebar({ currentPage, setCurrentPage }) {
                   label={item.label}
                   isActive={currentPage === item.id}
                   onClick={() => setCurrentPage(item.id)}
+                  badge={item.badge}
                 />
               </div>
             ))}

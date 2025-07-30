@@ -1,21 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useStore from '../../store';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useNotifications } from '../../contexts/NotificationContext';
+import NotificationList from './NotificationList';
 
 export default function Header({ setCurrentPage }) {
   const { user, logout } = useStore();
   const { isDark, toggleTheme } = useTheme();
+  const {
+    notifications,
+    unreadCount,
+    loading,
+    markAsRead,
+    markAllAsRead,
+    clearAllNotifications,
+    refreshNotifications
+  } = useNotifications();
+  
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
   const dropdownRef = useRef(null);
   const notificationRef = useRef(null);
-
-  // Sample notifications data
-  const [notifications, setNotifications] = useState([
-    { id: 1, title: 'New Order Received', message: 'You have a new order from ABC Store', time: '2 min ago', read: false },
-    { id: 2, title: 'Stock Alert', message: 'Tomatoes running low in stock', time: '1 hour ago', read: false },
-    { id: 3, title: 'Payment Confirmed', message: 'Payment of ₹5,000 received', time: '2 hours ago', read: true },
-  ]);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -39,21 +44,17 @@ export default function Header({ setCurrentPage }) {
     setDropdownOpen(false);
   };
 
-  const markAsRead = (id) => {
-    setNotifications(prev => prev.map(notif =>
-      notif.id === id ? { ...notif, read: true } : notif
-    ));
+  const handleMarkAsRead = (notificationId) => {
+    markAsRead(notificationId);
   };
 
-  const markAllAsRead = () => {
-    setNotifications(prev => prev.map(notif => ({ ...notif, read: true })));
+  const handleMarkAllAsRead = () => {
+    markAllAsRead();
   };
 
-  const clearAllNotifications = () => {
-    setNotifications([]);
+  const handleClearAllNotifications = () => {
+    clearAllNotifications();
   };
-
-  const unreadCount = notifications.filter(n => !n.read).length;
 
   const getRoleColor = (role) => {
     switch (role?.toLowerCase()) {
@@ -119,9 +120,15 @@ export default function Header({ setCurrentPage }) {
                 onClick={() => setNotificationOpen(!notificationOpen)}
                 className="p-2 text-gray-400 hover:text-gray-600 dark:text-dark-400 dark:hover:text-dark-600 relative rounded-lg hover:bg-gray-100 dark:hover:bg-dark-200 transition-all duration-300 hover:scale-110 group"
               >
-                <svg className="w-6 h-6 group-hover:animate-bounce-gentle transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 5a2 2 0 114 0c0 7.5 1.5 9 3 9H7c1.5 0 3-1.5 3-9zM9 21h6" />
-                </svg>
+                {loading ? (
+                  <svg className="w-6 h-6 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6 group-hover:animate-bounce-gentle transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 5a2 2 0 114 0c0 7.5 1.5 9 3 9H7c1.5 0 3-1.5 3-9zM9 21h6" />
+                  </svg>
+                )}
                 {unreadCount > 0 && (
                   <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center animate-pulse font-medium">
                     {unreadCount}
@@ -137,64 +144,15 @@ export default function Header({ setCurrentPage }) {
                     onClick={() => setNotificationOpen(false)}
                   ></div>
                   <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-dark-100 rounded-xl shadow-xl border border-gray-200 dark:border-dark-200 py-2 z-[10001] animate-scale-in backdrop-blur-md max-h-96 overflow-hidden">
-                    <div className="px-4 py-3 border-b border-gray-100 dark:border-dark-200 flex items-center justify-between">
-                      <h3 className="text-sm font-semibold text-gray-900 dark:text-dark-900">Notifications</h3>
-                      <div className="flex space-x-2">
-                        {unreadCount > 0 && (
-                          <button
-                            onClick={markAllAsRead}
-                            className="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
-                          >
-                            Read All
-                          </button>
-                        )}
-                        <button
-                          onClick={clearAllNotifications}
-                          className="text-xs text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors"
-                        >
-                          Clear All
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="max-h-64 overflow-y-auto">
-                      {notifications.length === 0 ? (
-                        <div className="px-4 py-8 text-center">
-                          <svg className="w-12 h-12 text-gray-300 dark:text-dark-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zm0 0H9a2 2 0 01-2-2V7a7 7 0 1114 0v8a2 2 0 01-2 2z" />
-                          </svg>
-                          <p className="text-sm text-gray-500 dark:text-dark-400">No notifications</p>
-                        </div>
-                      ) : (
-                        notifications.map((notification) => (
-                          <div
-                            key={notification.id}
-                            onClick={() => markAsRead(notification.id)}
-                            className={`px-4 py-3 hover:bg-gray-50 dark:hover:bg-dark-200 transition-all duration-200 cursor-pointer border-l-4 ${notification.read
-                              ? 'border-gray-200 dark:border-dark-200'
-                              : 'border-blue-500 bg-blue-50/50 dark:bg-blue-900/10'
-                              }`}
-                          >
-                            <div className="flex items-start justify-between">
-                              <div className="flex-1">
-                                <p className={`text-sm font-medium ${notification.read ? 'text-gray-600 dark:text-dark-600' : 'text-gray-900 dark:text-dark-900'}`}>
-                                  {notification.title}
-                                </p>
-                                <p className="text-xs text-gray-500 dark:text-dark-400 mt-1">
-                                  {notification.message}
-                                </p>
-                                <p className="text-xs text-gray-400 dark:text-dark-500 mt-1">
-                                  {notification.time}
-                                </p>
-                              </div>
-                              {!notification.read && (
-                                <div className="w-2 h-2 bg-blue-500 rounded-full mt-1 ml-2"></div>
-                              )}
-                            </div>
-                          </div>
-                        ))
-                      )}
-                    </div>
+                    <NotificationList
+                      notifications={notifications}
+                      onMarkAsRead={handleMarkAsRead}
+                      loading={loading}
+                      unreadCount={unreadCount}
+                      onMarkAllAsRead={handleMarkAllAsRead}
+                      onClearAll={handleClearAllNotifications}
+                      onRefresh={refreshNotifications}
+                    />
                   </div>
                 </>
               )}

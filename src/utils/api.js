@@ -2,7 +2,7 @@ import axios from 'axios';
 import useStore from '../store';
 
 // API URL Configuration with debugging
-const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://apna-mandi-updated-server.onrender.com/api' : '/api');
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://apna-mandi-updated-server.onrender.com/api' : 'http://localhost:5000/api');
 
 // Debug logging for development
 if (import.meta.env.DEV) {
@@ -45,3 +45,16 @@ api.interceptors.request.use((config) => {
 }, (error) => {
   return Promise.reject(error);
 });
+
+// Notification API functions
+export const notificationAPI = {
+  getNotifications: (params = {}) => api.get('/notifications', { params }),
+  getStats: () => api.get('/notifications/stats'),
+  markAsRead: (notificationId) => api.put(`/notifications/${notificationId}/read`),
+  markAllAsRead: () => api.put('/notifications/read-all'),
+  deleteNotification: (notificationId) => api.delete(`/notifications/${notificationId}`),
+  clearAll: () => api.delete('/notifications')
+};
+
+// Export the API base URL
+export { API_URL };

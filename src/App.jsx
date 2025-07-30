@@ -5,6 +5,7 @@ import DashboardLayout from './layouts/DashboardLayout';
 import OnboardingPage from './pages/OnboardingPage';
 import LoadingSpinner from './components/shared/LoadingSpinner';
 import { Toaster } from 'sonner';
+import { NotificationProvider } from './contexts/NotificationContext';
 
 export default function App() {
   const { user, token, checkUserSession, isLoading } = useStore();
@@ -49,21 +50,23 @@ export default function App() {
   };
 
   return (
-    <div className="App min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-dark-100 dark:via-dark-200 dark:to-dark-300 transition-all duration-500">
-      <Toaster 
-        position="top-center" 
-        richColors 
-        theme={document.documentElement.classList.contains('dark') ? 'dark' : 'light'}
-        toastOptions={{
-          duration: 4000,
-          style: {
-            background: 'var(--toast-bg)',
-            color: 'var(--toast-color)',
-            border: '1px solid var(--toast-border)',
-          },
-        }}
-      />
-      {renderContent()}
-    </div>
+    <NotificationProvider>
+      <div className="App min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-dark-100 dark:via-dark-200 dark:to-dark-300 transition-all duration-500">
+        <Toaster 
+          position="top-center" 
+          richColors 
+          theme={document.documentElement.classList.contains('dark') ? 'dark' : 'light'}
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: 'var(--toast-bg)',
+              color: 'var(--toast-color)',
+              border: '1px solid var(--toast-border)',
+            },
+          }}
+        />
+        {renderContent()}
+      </div>
+    </NotificationProvider>
   );
 }
